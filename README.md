@@ -1,13 +1,13 @@
 # Alertmanager-cluster
 A simple docker-compose alertmanager cluster with two peers.
 
-# What is Alertmanager?
+## What is Alertmanager?
 
 The Alertmanager hahttps://github.com/roberto-goncalves/alertmanager-clusterndles alerts sent by client applications such as the Prometheus server. It takes care of deduplicating, grouping, and routing them to the correct receiver integration such as email, PagerDuty, or OpsGenie. It also takes care of silencing and inhibition of alerts.
 
 From: https://prometheus.io/docs/alerting/alertmanager/
 
-# Images used:
+## Images used:
 
 * Prometheus: https://github.com/prometheus/prometheus - Dockerhub: https://hub.docker.com/r/prom/prometheus/
 * Alertmanager: https://github.com/prometheus/alertmanager - Dockerhub:
@@ -17,13 +17,13 @@ https://hub.docker.com/r/prom/node-exporter
 * Python-flask-api: https://github.com/roberto-goncalves/python-flask-api - Dockerhub:
 https://hub.docker.com/r/nonick70/python-flask-api
 
-# How to use:
+## How to use:
 
 ```
 docker-compose up
 ```
 
-# Results:
+## Results:
 
 If everything is correct, after 30 seconds on InstanceUp(node_exporter) the cluster will automatically deduplicate the message from Prometheus and send via Webhook to the application, which will fetch the message and return with:
 ```
