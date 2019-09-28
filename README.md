@@ -25,7 +25,7 @@ docker-compose up
 
 Results:
 
-If everything is correct the cluster will automatically deduplicate the message from Prometheus with:
+If everything is correct, after 30 seconds on InstanceUp(node_exporter) the cluster will automatically deduplicate the message from Prometheus and send via Webhook to the application, which will fetch the message and return with:
 ```
 application_1    | 172.26.0.5 - - [28/Sep/2019 19:37:37] "POST / HTTP/1.1" 200 -
 ```
