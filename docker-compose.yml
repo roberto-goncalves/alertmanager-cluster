@@ -1,0 +1,64 @@
+version: '2'
+
+networks:
+  cluster-net:
+    driver: bridge
+
+services:
+
+    prometheus:
+        image: prom/prometheus
+        ports:
+            - 9090:9090
+        volumes:
+            - ./prometheus.yml:/prometheus.yml
+            - ./alert_rules.yml:/alert_rules.yml
+        command:
+            - '--config.file=/prometheus.yml'
+        networks:
+            - cluster-net
+        depends_on:
+            - alertmanager1
+            - alertmanager2
+
+    node_exporter:
+        image: prom/node-exporter
+        privileged: true
+        ports:
+            - 9100
+        networks:
+            - cluster-net
+
+    alertmanager1:
+        image: prom/alertmanager
+        ports:
+            - 9093
+            - 9094
+        volumes:
+            - ./alertmanager.yml:/alertmanager.yml
+        command:
+            - '--config.file=/alertmanager.yml'
+            - '--cluster.peer=alertmanager2:9094'
+        networks:
+            - cluster-net
+
+
+    alertmanager2:
+        image: prom/alertmanager
+        ports:
+            - 9093
+            - 9094
+        volumes:
+            - ./alertmanager.yml:/alertmanager.yml
+        command:
+            - '--config.file=/alertmanager.yml'
+            - '--cluster.peer=alertmanager1:9094'
+        networks:
+            - cluster-net
+
+    application:
+        image: nonick70/python-flask-api
+        ports:
+            - 9095
+        networks:
+            - cluster-net

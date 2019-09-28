@@ -1,0 +1,7 @@
+groups:
+- name: node-exporter-cluster
+  rules:
+
+  - alert: InstanceUp
+    expr: up == 1
+    for: 30s
