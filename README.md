@@ -1,2 +1,32 @@
 # alertmanager-cluster
 A simple docker-compose alertmanager cluster with two peers.
+
+
+Images used:
+
+* Prometheus: https://github.com/prometheus/prometheus - Dockerhub: https://hub.docker.com/r/prom/prometheus/
+* Alertmanager: https://github.com/prometheus/alertmanager - Dockerhub:
+https://hub.docker.com/r/prom/alertmanager
+* Node-exporter: https://github.com/prometheus/node_exporter - Dockerhub:
+https://hub.docker.com/r/prom/node-exporter
+* Python-flask-api: https://github.com/roberto-goncalves/python-flask-api - Dockerhub:
+https://hub.docker.com/r/nonick70/python-flask-api
+
+How to use:
+
+```
+docker-compose up
+```
+
+Results:
+
+If everything is correct the cluster will automatically deduplicate the message from Prometheus with
+```
+application_1    | 172.26.0.5 - - [28/Sep/2019 19:37:37] "POST / HTTP/1.1" 200 -
+```
+Then, to test on alertmanager's standalone mode just comment out --cluster.peers from both, the results shoud be:
+```
+application_1    | 172.26.0.5 - - [28/Sep/2019 19:37:37] "POST / HTTP/1.1" 200 -
+application_1    | 172.26.0.2 - - [28/Sep/2019 19:37:37] "POST / HTTP/1.1" 200 
+```
+So, the deduplication is working and we have HA mode.
