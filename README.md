@@ -1,6 +1,11 @@
-# alertmanager-cluster
+# Alertmanager-cluster
 A simple docker-compose alertmanager cluster with two peers.
 
+What is Alertmanager?
+
+The Alertmanager handles alerts sent by client applications such as the Prometheus server. It takes care of deduplicating, grouping, and routing them to the correct receiver integration such as email, PagerDuty, or OpsGenie. It also takes care of silencing and inhibition of alerts.
+
+From: https://prometheus.io/docs/alerting/alertmanager/
 
 Images used:
 
@@ -20,11 +25,11 @@ docker-compose up
 
 Results:
 
-If everything is correct the cluster will automatically deduplicate the message from Prometheus with
+If everything is correct the cluster will automatically deduplicate the message from Prometheus with:
 ```
 application_1    | 172.26.0.5 - - [28/Sep/2019 19:37:37] "POST / HTTP/1.1" 200 -
 ```
-Then, to test on alertmanager's standalone mode just comment out --cluster.peers from both, the results shoud be:
+Then, to test on alertmanager's standalone mode just comment out --cluster.peers from both on docker-compose.yml, the results shoud be:
 ```
 application_1    | 172.26.0.5 - - [28/Sep/2019 19:37:37] "POST / HTTP/1.1" 200 -
 application_1    | 172.26.0.2 - - [28/Sep/2019 19:37:37] "POST / HTTP/1.1" 200 
